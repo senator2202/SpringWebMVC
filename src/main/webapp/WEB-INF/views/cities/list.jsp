@@ -19,7 +19,11 @@
         <input type="submit" name="submit" value="Войти">
     </form>
 </s:authorize>
-<a href="${pageContext.request.contextPath}/cities/add">All cities</a>
+
+<s:authorize access="hasAnyRole('ROLE_USER')">
+    <a href="${pageContext.request.contextPath}/cities/add">Add city</a>
+</s:authorize>
+
 <table border="1">
     <c:forEach var="city" items="${cities}">
         <tr>
@@ -28,12 +32,15 @@
             <td>${city.countryCode}</td>
             <td>${city.district}</td>
             <td>${city.population}</td>
-            <td>
-                <a href="/cities/${city.id}/update">update</a>
-            </td>
-            <td>
-                <a href="/cities/${city.id}/delete">delete</a>
-            </td>
+            <s:authorize access="hasAnyRole('ROLE_USER')">
+                <td>
+                    <a href="/cities/${city.id}/update">update</a>
+                </td>
+                <td>
+                    <a href="/cities/${city.id}/delete">delete</a>
+                </td>
+            </s:authorize>
+
         </tr>
     </c:forEach>
 </table>
