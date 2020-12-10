@@ -7,11 +7,11 @@
     <s:authorize access="isAuthenticated()">
         Привет, <s:authentication property="principal.username"/>
         <br/>
-        <a href="/j_spring_security_logout">Выход</a>
+        <a href="${pageContext.request.contextPath}/j_spring_security_logout">Выход</a>
     </s:authorize>
 </div>
 <s:authorize access="isAnonymous()">
-    <form id="login" name="loginForm" action="/j_spring_security_check" method="post">
+    <form id="login" name="loginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
         <label>Логин: </label>
         <input type="text" name="j_username">
         <label>Пароль</label>

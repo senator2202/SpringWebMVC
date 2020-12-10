@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <html>
 <body>
 <h1>City ${city.name}</h1>
@@ -19,7 +20,9 @@
             <label for="population">Population</label>
             <form:input id="population" path="population"/>
             <form:errors path="population"/>
-            <input type="submit" value="submit">
+            <s:authorize access="hasRole('ROLE_USER')">
+                <input type="submit" value="submit">
+            </s:authorize>
         </div>
     </fieldset>
 </form:form>

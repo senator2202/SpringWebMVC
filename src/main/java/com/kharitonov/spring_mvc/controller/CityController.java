@@ -3,6 +3,8 @@ package com.kharitonov.spring_mvc.controller;
 import com.kharitonov.spring_mvc.entity.City;
 import com.kharitonov.spring_mvc.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +30,7 @@ public class CityController {
     }
 
     @GetMapping("/{id}/delete")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public String delete(@PathVariable("id") int id, Model model) {
         cityService.delete(id);
         return "redirect:/cities";
@@ -40,6 +43,7 @@ public class CityController {
     }
 
     @PatchMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public String update(@Valid @ModelAttribute("city") City city, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "cities/edit";
@@ -54,6 +58,7 @@ public class CityController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public String add(@Valid @ModelAttribute("newCity") City newCity, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "cities/create";
