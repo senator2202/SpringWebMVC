@@ -1,6 +1,7 @@
 package com.kharitonov.spring_mvc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "city")
@@ -9,9 +10,17 @@ import javax.persistence.*;
 })
 public class City extends ProjectEntity {
     private int id;
+
+    @Size(min = 2, max = 35, message = "Length must be between 2 and 35 characters")
     private String name;
+
+    @Size(min = 3, max = 3, message = "Country code has 3 characters!")
     private String countryCode;
+
+    @Size(max = 20, message = "Length must be 20 characters maximum")
     private String district;
+
+    @Min(value = 1, message = "Population must be > 0")
     private int population;
 
     public City() {

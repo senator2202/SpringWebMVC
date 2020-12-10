@@ -1,22 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <body>
 <h1>City ${city.name}</h1>
-<form method="post">
+<form:form method="post" modelAttribute="city">
     <input type="hidden" name="_method" value="patch">
     <fieldset>
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name" value="${city.name}" id="name">
+            <form:input id="name" path="name"/>
+            <form:errors path="name"/>
             <label for="countryCode">Country code</label>
-            <input type="text" name="countryCode" value="${city.countryCode}" id="countryCode">
+            <form:input id="countryCode" path="countryCode"/>
+            <form:errors path="countryCode"/>
             <label for="district">District</label>
-            <input type="text" name="district" value="${city.district}" id="district">
+            <form:input id="district" path="district"/>
+            <form:errors path="district"/>
             <label for="population">Population</label>
-            <input type="text" name="population" value="${city.population}" id="population">
+            <form:input id="population" path="population"/>
+            <form:errors path="population"/>
             <input type="submit" value="submit">
         </div>
     </fieldset>
-</form>
+</form:form>
 </body>
 </html>

@@ -39,12 +39,27 @@ public class CityController {
         return "cities/edit";
     }
 
-    @PatchMapping(value = "/{id}/update")
-    public String update(City city, BindingResult bindingResult) {
+    @PatchMapping("/{id}/update")
+    public String update(@Valid @ModelAttribute("city") City city, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "cities/edit";
         }
         cityService.save(city);
         return "redirect:/cities";
     }
+
+    @GetMapping("/add")
+    public String addForm(@ModelAttribute("newCity") City city) {
+        return "cities/create";
+    }
+
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("newCity") City newCity, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "cities/create";
+        }
+        cityService.save(newCity);
+        return "redirect:/cities";
+    }
+
 }
