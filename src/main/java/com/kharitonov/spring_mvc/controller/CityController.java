@@ -30,7 +30,7 @@ public class CityController {
     }
 
     @GetMapping("/{id}/delete")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String delete(@PathVariable("id") int id, Model model) {
         cityService.delete(id);
         return "redirect:/cities";
@@ -43,7 +43,7 @@ public class CityController {
     }
 
     @PatchMapping("/{id}/update")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String update(@Valid @ModelAttribute("city") City city, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "cities/edit";

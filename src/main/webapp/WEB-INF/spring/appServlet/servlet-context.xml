@@ -14,7 +14,11 @@
     http://www.springframework.org/schema/security/spring-security.xsd">
 
     <mvc:resources mapping="/resources/**" location="/resources"/>
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <s:global-method-security pre-post-annotations="enabled"/>
 

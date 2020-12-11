@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="angular.min.js"></script>
+    <style>
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Cities</h1>
+<div ng-app="myApp" ng-controller="cityController">
+    <p><input type="search" ng-model="userSearch"></p>
+    <table border="1">
+        <tr>
+            <th ng-click="orderByMe('id')">ID</th>
+            <th ng-click="orderByMe('name')">Name</th>
+            <th ng-click="orderByMe('countryCode')">Country Code</th>
+            <th ng-click="orderByMe('district')">District</th>
+            <th ng-click="orderByMe('population')">Population</th>
+        </tr>
+        <tr ng-repeat="c in cities | filter:{id:userSearch} |orderBy:myOrderBy  | limitTo:pageSize:currentPage*pageSize">
+            <td>{{c.id}}</td>
+            <td>{{c.name}}</td>
+            <td>{{c.countryCode}}</td>
+            <td>{{c.district}}</td>
+            <td>{{c.population}}</td>
+        </tr>
+    </table>
+    <button ng-repeat="i in getNumberAsArray(numberOfPages(courses | filter:{title:userSearch})) track by $index"
+            ng-click="setCurrentPage($index)">
+        {{$index+1}}
+    </button>
+
+</div>
+<script>
+    angular.module('myApp', []).
+    controller('cityController', function ($scope, $http) {
+        $http.get('../api/city').
+        then(function (response) {
+            $scope.cities =
+                angular.fromJson(response.data);
+
+            $scope.pageSize = 10;
+            $scope.currentPage = 0;
+            $scope.setCurrentPage = function (currentPage) {
+                $scope.currentPage = currentPage;
+            }
+            $scope.numberOfPages = function (cs) {
+                return Math.ceil(cs.length / $scope.pageSize);
+            }
+            $scope.getNumberAsArray = function (num) {
+                return new Array(num)
+            }
+
+        }).catch(function (err) {
+
+        });
+
+        $scope.myOrderBy = 'id';
+        $scope.orderByMe = function (x) {
+            $scope.myOrderBy = x
+        }
+    });
+</script>
+
+</body>
+</html>
